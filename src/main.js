@@ -9,20 +9,25 @@ const exampleOne= async ()=>{
     const renderer=new THREE.WebGLRenderer({canvas});
     const camera= new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,100);
     const scene= new THREE.Scene();
-    const axesHelper= new THREE.AxesHelper(7)
-    camera.position.set(0,1.25,5)
+    const axesHelper= new THREE.AxesHelper(7);
+    const buttonCenterCamera=document.querySelector('#button_centerCamera');
+
+    camera.position.set(5,2,8);
+    
     
     scene.background=new THREE.Color('white');
-
-
-
-
+    
+    
+    
     // configuramos para que las lineas de coordenadas x,y,z sean visibles en el navegador
     axesHelper.setColors(new THREE.Color('#FF0000'),new THREE.Color('#0000FF'),new THREE.Color('#FF8C00'))
-
+    
     scene.add(axesHelper);
     //Establecer el modo orbitar
     const controls= new OrbitControls(camera,canvas)
+    // Punto del objeto al que apuntará la camara
+    controls.target.set(5,2,0);
+
     //Esteblecer diferentes dimesiones para los cajas
     const boxes={
         boxOne:[2,1,2],
@@ -62,7 +67,8 @@ const exampleOne= async ()=>{
         console.error('Warning:', error.message)
     }
 
-
+    // Guardamos el estado de la camara
+    controls.saveState();
     
     // Añadiendo Inercia
     controls.enableDamping=true;
