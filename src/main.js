@@ -30,6 +30,7 @@ const exampleOne= async ()=>{
         boxThree:[2,2,2],
         boxFour:[1,1,1]
     };
+    
 
     const  manyBoxes=(axis,color,x)=>{
         const material=new THREE.MeshPhongMaterial({color:color});
@@ -63,7 +64,19 @@ const exampleOne= async ()=>{
 
 
     
-
+    // Añadiendo Inercia
+    controls.enableDamping=true;
+    controls.dampingFactor=0.009;
+    // Reset el estado de camara
+    const resetStateCamera=()=>{        
+        controls.enableDamping=false;
+        controls.update();
+        controls.reset();
+        controls.enableDamping=true;
+    };
+    buttonCenterCamera.addEventListener('click',resetStateCamera);
+    
+  
     // Configuramos la iluminación
     
     const frontdLight = new THREE.DirectionalLight(0xFFFFFF,1)
@@ -92,8 +105,6 @@ const exampleOne= async ()=>{
             camera.updateProjectionMatrix();
         }
 
-        controls.enableDamping=true;
-        controls.dampingFactor=0.009;
         controls.update();
         renderer.render(scene,camera)
         requestAnimationFrame(animation)
